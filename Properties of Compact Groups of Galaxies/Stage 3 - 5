@@ -1,0 +1,20 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy.stats import ks_2samp
+
+galaxies_morphology = pd.read_csv('test\galaxies_morphology.tsv', delimiter='\t')
+isolated_galaxies = pd.read_csv('test\isolated_galaxies.tsv', delimiter='\t')
+
+names = ["groups galaxies", "isolated galaxies"]
+plt.hist([galaxies_morphology['n'], isolated_galaxies['n']], stacked=True, label=names)
+plt.ylabel("Count")
+plt.xlabel("n")
+plt.legend()
+plt.show()
+
+galaxies_fraction = len(galaxies_morphology[galaxies_morphology['n'] > 2]) / len(galaxies_morphology)
+isolated_fraction = len(isolated_galaxies[isolated_galaxies['n'] > 2]) / len(isolated_galaxies)
+
+kolmogorov_test = ks_2samp(galaxies_morphology['n'], isolated_galaxies['n'])
+
+print('{:.5f} {:.5f} {}'.format(galaxies_fraction, isolated_fraction, kolmogorov_test.pvalue))
