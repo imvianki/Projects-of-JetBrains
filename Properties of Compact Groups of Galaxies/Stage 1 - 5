@@ -1,0 +1,7 @@
+import pandas as pd
+
+data = pd.read_csv('test\groups.tsv', delimiter='\t')
+data.dropna(inplace=True)
+mean_IGL = data.groupby('features').agg({'mean_mu': 'mean'})
+
+print(f'{mean_IGL.mean_mu[1]} {mean_IGL.mean_mu[0]}')
