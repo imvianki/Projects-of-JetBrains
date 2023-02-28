@@ -1,0 +1,32 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy.stats import shapiro
+from scipy.stats import pearsonr
+
+galaxies_df = pd.read_csv('test\galaxies_morphology.tsv', delimiter='\t')
+groups_df = pd.read_csv('test\groups.tsv', delimiter="\t")
+
+group_means_df = galaxies_df.groupby('Group').agg({'n': 'mean', 'T': 'mean'})
+group_means_df.columns = ['mean_n', 'mean_T']
+
+group_means_df = pd.merge(group_means_df, groups_df, on = 'Group')
+group_means_df.dropna(inplace=True)
+
+plt.scatter(group_means_df['mean_n'], group_means_df['mean_mu'], c='red')
+plt.xlabel('(n)')
+plt.show()
+
+plt.scatter(group_means_df['mean_T'], group_means_df['mean_mu'], c='red')
+plt.xlabel('(T)')
+plt.show()
+
+shapiro_mu = shapiro(group_means_df['mean_mu'])
+shapiro_n = shapiro(group_means_df['mean_n'])
+shapiro_T = shapiro(group_means_df['mean_T'])
+
+pearsonr_n = pearsonr(group_means_df['mean_mu'], group_means_df['mean_n'])
+pearsonr_T = pearsonr(group_means_df['mean_mu'], group_means_df['mean_T'])
+
+print('{:.5} {:.5} {:.5} {} {:.5}'.format(shapiro_mu.pvalue, shapiro_n.pvalue,
+                                          shapiro_T.pvalue, pearsonr_n.pvalue,
+                                          pearsonr_T.pvalue))
