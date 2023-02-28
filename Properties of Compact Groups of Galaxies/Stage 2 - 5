@@ -1,0 +1,15 @@
+import pandas as pd
+from scipy.stats import shapiro
+from scipy.stats import fligner
+from scipy.stats import f_oneway
+
+data = pd.read_csv('test\groups.tsv', delimiter='\t')
+data.dropna(inplace=True)
+
+array_LSB = data[data.features == 1].mean_mu
+array_no_LSB = data[data.features == 0].mean_mu
+
+print('{:.5f} {:.5f} {:.5f} {:.5f}'.format(shapiro(array_LSB).pvalue,
+                                           shapiro(array_no_LSB).pvalue,
+                                           fligner(array_LSB, array_no_LSB).pvalue,
+                                           f_oneway(array_LSB, array_no_LSB).pvalue))
