@@ -1,0 +1,34 @@
+import random
+
+print("======================================================================")
+
+pieces = [[i, j] for j in range(7) for i in range(7) if i <= j]
+
+random.shuffle(pieces)
+stock_pieces = [pieces[i] for i in range(14)]
+stock_available = [piece for piece in pieces if piece not in stock_pieces]
+
+computer_pieces = [stock_available[i] for i in range(7)]
+player_pieces = [piece for piece in stock_available if piece not in computer_pieces]
+
+max = max(max(computer_pieces), max(player_pieces))
+
+if max in computer_pieces:
+    index = computer_pieces.index(max)
+    domino_snake = [computer_pieces.pop(index)]
+    status = 'player'
+else:
+    index = player_pieces.index(max)
+    domino_snake = [player_pieces.pop(index)]
+    status = 'computer'
+
+print(f'Stock size: {len(stock_pieces)}')
+print(f'Computer pieces: {len(computer_pieces)} \n')
+print(domino_snake[0], "\n")
+print("Your pieces:")
+for n, piece in enumerate(player_pieces, start=1):
+    print(f'{n}: {piece}')
+
+print()
+print("Status: Computer is about to make a move. Press Enter to continue..." if status == 'computer'
+      else "Status: It's your turn to make a move. Enter your command.")
