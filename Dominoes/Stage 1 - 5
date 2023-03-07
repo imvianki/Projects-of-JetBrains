@@ -1,0 +1,27 @@
+import random
+
+pieces = [[i, j] for j in range(7) for i in range(7) if i <= j]
+
+random.shuffle(pieces)
+stock_pieces = [pieces[i] for i in range(14)]
+stock_available = [piece for piece in pieces if piece not in stock_pieces]
+
+computer_pieces = [stock_available[i] for i in range(7)]
+player_pieces = [piece for piece in stock_available if piece not in computer_pieces]
+
+max = max(max(computer_pieces), max(player_pieces))
+
+if max in computer_pieces:
+    index = computer_pieces.index(max)
+    domino_snake = [computer_pieces.pop(index)]
+    status = 'player'
+else:
+    index = player_pieces.index(max)
+    domino_snake = [player_pieces.pop(index)]
+    status = 'computer'
+
+print(f'Stock pieces: {stock_pieces}')
+print(f'Computer pieces: {computer_pieces}')
+print(f'Player pieces: {player_pieces}')
+print(f'Domino snake: {domino_snake}')
+print(f'Status: {status}')
