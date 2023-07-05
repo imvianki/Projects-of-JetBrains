@@ -1,0 +1,10 @@
+delete_rows = "DELETE FROM games_characters
+    WHERE game_id NOT IN (
+    SELECT game_id
+    FROM (
+        SELECT DISTINCT game_id
+        FROM games_characters
+        WHERE character_id IS NOT NULL) AS subquery);"
+
+alter_table_platforms = "UPDATE platforms SET release_date = DATE();"
+alter_table_characters = "UPDATE characters SET birthday = DATE();"
