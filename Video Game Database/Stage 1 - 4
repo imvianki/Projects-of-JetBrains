@@ -1,0 +1,52 @@
+video_games_tb = "CREATE TABLE video_games ( 
+id INT NOT NULL PRIMARY KEY, 
+name VARCHAR(40),
+game_genre VARCHAR(30),
+game_developer VARCHAR(50),
+release_date DATE 
+);"
+
+game_developers_tb = "CREATE TABLE game_developers ( 
+id INT NOT NULL PRIMARY KEY, 
+name VARCHAR(50),
+address VARCHAR(70),
+state VARCHAR(30),
+city VARCHAR(50),
+country VARCHAR(20)
+);"
+
+platforms_tb = "CREATE TABLE platforms( 
+id INT PRIMARY KEY NOT NULL,
+name VARCHAR(30),
+company_id INT,
+company VARCHAR(50),
+release_date DATETIME,
+original_price DECIMAL(4,2)
+);"
+
+platforms_games_tb = "CREATE TABLE platforms_games(
+game_id INT NOT NULL,
+platform_id INT NOT NULL,
+platform_name VARCHAR(20),
+PRIMARY KEY (game_id, platform_id),
+FOREIGN KEY(game_id) REFERENCES video_games(id),
+FOREIGN KEY(platform_id) REFERENCES platforms(id)
+);"
+
+
+characters_tb = "CREATE TABLE characters(
+id INT NOT NULL PRIMARY KEY,
+name VARCHAR(30),
+birthday DATETIME,
+gender DECIMAL(2,1),
+info VARCHAR(200)
+);"
+
+games_characters_tb = "CREATE TABLE games_characters(
+character_id INT NOT NULL,
+character_name VARCHAR(40),
+game_id INT NOT NULL,
+PRIMARY KEY (game_id, character_id),
+FOREIGN KEY(game_id) REFERENCES video_games(id),
+FOREIGN KEY(character_id) REFERENCES characters(id)
+);"
