@@ -1,0 +1,93 @@
+import os
+
+
+def header():
+    level = int(input('Level: '))
+    if level in range(1, 7):
+        text = input('Text: ')
+        markdown_ = '#' * level + ' ' + text + '\n'
+        return markdown_
+    else:
+        print('The level should be within the range of 1 to 6')
+        return header()
+
+
+def bold():
+    text = input('Text: ')
+    markdown_ = '**' + text + '**'
+    return markdown_
+
+
+def plain():
+    text = input('Text: ')
+    markdown_ = text
+    return markdown_
+
+
+def italic():
+    text = input('Text: ')
+    markdown_ = '*' + text + '*'
+    return markdown_
+
+
+def inline_code():
+    text = input('Text: ')
+    markdown_ = '`' + text + '`'
+    return markdown_
+
+
+def new_line():
+    markdown_ = '\n'
+    return markdown_
+
+
+def link():
+    label = input('Label: ')
+    url = input('URL: ')
+    markdown_ = '[' + label + ']' + '(' + url + ')'
+    return markdown_
+
+
+def ordered_list():
+    list_ = []
+    rows = int(input('Number of rows: '))
+    if rows > 0:
+        for i in range(rows):
+            row_number = input(f'Row #{i + 1}: ')
+            list_.append(f'{i + 1}. {row_number}')
+        markdown_ = '\n'.join(list_)
+        return markdown_ + '\n'
+    else:
+        print('The number of rows should be greater than zero')
+        return ordered_list()
+
+
+def unordered_list():
+    list_ = []
+    rows = int(input('Number of rows: '))
+    if rows > 0:
+        for i in range(rows):
+            row_number = input(f'Row #{i + 1}: ')
+            list_.append(f'* {row_number}')
+        markdown_ = '\n'.join(list_)
+        return markdown_ + '\n'
+    else:
+        print('The number of rows should be greater than zero')
+        return unordered_list()
+
+
+formatters = {'header': header, 'bold': bold, 'plain': plain, 'inline-code': inline_code,
+              'new-line': new_line, 'link': link, 'italic': italic, 'ordered-list': ordered_list,
+              'unordered-list': unordered_list}
+
+markdown = ""
+while True:
+    formatter = input("Choose a formatter: ")
+    if formatter == "!done":
+        if os.path.exists("output.md"):
+            os.remove("output.md")
+        with open("output.md", "w") as file:
+            file.write(markdown)
+        break
+    markdown += formatters[formatter]()
+    print(markdown)
