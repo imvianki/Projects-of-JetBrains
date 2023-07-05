@@ -1,0 +1,78 @@
+def header():
+    level = int(input('Level: '))
+    if level in range(1, 7):
+        text = input('Text: ')
+        markdown = '#' * level + ' ' + text + '\n'
+        return markdown
+    else:
+        print('The level should be within the range of 1 to 6')
+        return header()
+
+def bold():
+    text = input('Text: ')
+    markdown = '**' + text + '**'
+    return markdown
+
+def plain():
+    text = input('Text: ')
+    markdown = text
+    return markdown
+
+def italic():
+    text = input('Text: ')
+    markdown = '*' + text + '*'
+    return markdown
+
+def inline_code():
+    text = input('Text: ')
+    markdown = '`' + text + '`'
+    return markdown
+
+def new_line():
+    markdown = '\n'
+    return markdown
+
+def link():
+    label = input('Label: ')
+    url = input('URL: ')
+    markdown = '[' + label + ']' + '(' + url + ')'
+    return markdown
+
+def ordered_list():
+    list_ = []
+    rows = int(input('Number of rows: '))
+    if rows > 0:
+        for i in range(rows):
+            row_number = input(f'Row #{i + 1}: ')
+            list_.append(f'{i + 1}. {row_number}')
+        markdown = '\n'.join(list_)
+        return markdown + '\n'
+    else:
+        print('The number of rows should be greater than zero')
+        return ordered_list()
+    
+
+def unordered_list():
+    list_ = []
+    rows = int(input('Number of rows: '))
+    if rows > 0:
+        for i in range(rows):
+            row_number = input(f'Row #{i + 1}: ')
+            list_.append(f'* {row_number}')
+        markdown = '\n'.join(list_)
+        return markdown + '\n'
+    else:
+        print('The number of rows should be greater than zero')
+        return unordered_list()
+
+formatters = {'header': header, 'bold': bold, 'plain': plain, 'inline-code': inline_code,
+              'new-line': new_line, 'link': link, 'italic': italic, 'ordered-list': ordered_list, 
+              'unordered-list': unordered_list}
+
+markdown = ""
+while True:
+    formatter = input("Choose a formatter: ")
+    if formatter == "!done":
+        break
+    markdown += formatters[formatter]()
+    print(markdown)
