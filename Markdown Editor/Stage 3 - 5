@@ -1,0 +1,50 @@
+def header():
+    level = int(input('Level: '))
+    if level in range(1, 7):
+        text = input('Text: ')
+        markdown = '#' * level + ' ' + text + '\n'
+        return markdown
+    else:
+        print('The level should be within the range of 1 to 6')
+        return header()
+
+def bold():
+    text = input('Text: ')
+    markdown = '**' + text + '**'
+    return markdown
+
+def plain():
+    text = input('Text: ')
+    markdown = text
+    return markdown
+
+def italic():
+    text = input('Text: ')
+    markdown = '*' + text + '*'
+    return markdown
+
+def inline_code():
+    text = input('Text: ')
+    markdown = '`' + text + '`'
+    return markdown
+
+def new_line():
+    markdown = '\n'
+    return markdown
+
+def link():
+    label = input('Label: ')
+    url = input('URL: ')
+    markdown = '[' + label + ']' + '(' + url + ')'
+    return markdown
+
+formatters = {'header': header, 'bold': bold, 'plain': plain, 'inline-code': inline_code,
+              'new-line': new_line, 'link': link, 'italic': italic}
+
+markdown = ""
+while True:
+    formatter = input("Choose a formatter: ")
+    if formatter == "!done":
+        break
+    markdown += formatters[formatter]()
+    print(markdown)
