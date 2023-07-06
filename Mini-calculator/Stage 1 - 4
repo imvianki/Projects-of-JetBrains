@@ -1,0 +1,6 @@
+arithmetic = {'+': lambda x, y: x + y,
+              '-': lambda x, y: x - y,
+              '*': lambda x, y: x * y}
+
+op = input().split(' ')
+print(arithmetic[op[1]](int(op[0]), int(op[2])))
