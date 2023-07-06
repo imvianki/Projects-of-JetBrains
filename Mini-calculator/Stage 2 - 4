@@ -1,0 +1,13 @@
+import random
+
+arithmetic = {'+': lambda x, y: x + y,
+              '-': lambda x, y: x - y,
+              '*': lambda x, y: x * y}
+
+
+numbers = [random.randint(2, 9) for _ in range(2)]
+op = random.choice(list(arithmetic.keys()))
+condition = arithmetic[op](numbers[0], numbers[1])
+
+print(f'{numbers[0]} {op} {numbers[1]}')
+print('Right' if int(input()) == condition else 'Wrong!')
