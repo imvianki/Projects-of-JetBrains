@@ -1,0 +1,10 @@
+import requests
+
+url = input('Input the URL:\n')
+r = requests.get(url)
+
+if r:
+    print(r.json()['content'] if 'content' in r.json() else 'Invalid quote resource!')
+
+else:
+    print('Invalid quote resource!')
