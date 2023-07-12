@@ -1,0 +1,10 @@
+SELECT name,
+	CASE 
+		WHEN AVG(result) > 3.5 THEN 'above average'
+        ELSE 'below average'
+        END AS best
+FROM Students s
+INNER JOIN Student_Subject ss
+	ON s.student_id = ss.student_id
+GROUP BY name
+ORDER BY name;
