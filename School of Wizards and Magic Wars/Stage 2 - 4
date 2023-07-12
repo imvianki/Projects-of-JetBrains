@@ -1,0 +1,9 @@
+achievement_point = "SELECT name, SUM(bonus) AS 'bonus point'
+FROM Students s
+INNER JOIN Student_Achievement sa
+	ON s.student_id = sa.student_id
+INNER JOIN Achievement a
+	ON a.achievement_id = sa.achievement_id
+GROUP BY name
+ORDER BY SUM(bonus) DESC, name
+LIMIT 4;"
